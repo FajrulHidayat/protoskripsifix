@@ -69,7 +69,7 @@ class Demo extends React.Component {
     }
   }
   onFinish = (values) => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     // console.log('Success:', props);
     let headers = {
         headers: {
