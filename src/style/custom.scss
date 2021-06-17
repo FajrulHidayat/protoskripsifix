@@ -92,9 +92,28 @@ aside {
   // position: fixed;
 }
 .logo {
-  height: 32px;
   margin: 16px;
-  background: rgb(255, 255, 255);
+  // background: rgb(255, 255, 255);
+  img{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+  h3{
+    color: #f0f0f0;
+    font-size: large;
+    text-align: center;
+  }
+  h6{
+    color: #f0f0f0;
+    font-size: medium;
+    text-align: center;
+  }
+  img{
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+  }
 }
 
 .site-layout .site-layout-background {

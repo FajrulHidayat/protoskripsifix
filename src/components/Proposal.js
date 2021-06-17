@@ -1,130 +1,134 @@
 import React from 'react'
 import Tabel from './Table'
 
-class Propsal extends React.Component{
-    constructor(props){
+class Propsal extends React.Component {
+    constructor(props) {
         super(props)
-        this.state={
-            kolom:[],
-            route:""
+        this.state = {
+            kolom: [],
+            route: ""
         }
-        this.koloms=[
+        this.koloms = [
             [
                 {
-                    title:"NIM",
-                    data:"nim"
+                    title: "NIM",
+                    data: "nim"
                 },
                 {
-                    title:"Nama",
-                    data:"nama"
+                    title: "Nama",
+                    data: "nama"
                 },
                 {
-                    title:"Judul",
-                    data:"judul"
+                    title: "Judul",
+                    data: "judul"
                 },
                 {
-                    title:"Pembimbing 1",
-                    data:"pembimbing1"
+                    title: "Pembimbing 1",
+                    data: "pembimbing1"
                 },
                 {
-                    title:"Pembimbing 2",
-                    data:"pembimbing2"
+                    title: "Pembimbing 2",
+                    data: "pembimbing2"
                 },
                 {
-                    title:"Penguji 1",
-                    data:"penguji1"
+                    title: "Penguji 1",
+                    data: "penguji1"
                 },
                 {
-                    title:"Penguji 2",
-                    data:"penguji2"
+                    title: "Penguji 2",
+                    data: "penguji2"
                 },
                 {
-                    title:"Waktu",
-                    data:"waktu"
+                    title: "Waktu",
+                    data: "waktu"
                 },
                 {
-                    title:"Tempat",
-                    data:"tempat"
+                    title: "Tempat",
+                    data: "tempat"
                 },
                 {
-                    title:"Pelaksana",
-                    data:"pelaksana"
+                    title: "Pelaksana",
+                    data: "pelaksana"
                 },
             ],
             [
                 {
-                    title:"NIM",
-                    data:"nim"
+                    title: "NIM",
+                    data: "nim"
                 },
                 {
-                    title:"Nama",
-                    data:"nama"
+                    title: "Nama",
+                    data: "nama"
                 },
                 {
-                    title:"Judul",
-                    data:"judul"
+                    title: "Judul",
+                    data: "judul"
                 },
                 {
-                    title:"Pembimbing 1",
-                    data:"pembimbing1"
+                    title: "Pembimbing 1",
+                    data: "pembimbing1"
                 },
                 {
-                    title:"Pembimbing 2",
-                    data:"pembimbing2"
+                    title: "Pembimbing 2",
+                    data: "pembimbing2"
                 },
                 {
-                    title:"Penguji 1",
-                    data:"penguji1"
+                    title: "Penguji 1",
+                    data: "penguji1"
                 },
                 {
-                    title:"Penguji 2",
-                    data:"penguji2"
+                    title: "Penguji 2",
+                    data: "penguji2"
                 },
                 {
-                    title:"Waktu",
-                    data:"waktu"
+                    title: "Waktu",
+                    data: "waktu"
                 },
                 {
-                    title:"Tempat",
-                    data:"tempat"
+                    title: "Tempat",
+                    data: "tempat"
                 },
                 {
-                    title:"Pelaksana",
-                    data:"pelaksana"
+                    title: "Pelaksana",
+                    data: "pelaksana"
                 },
-                
+
             ],
             [
                 {
-                    title:"NIM",
-                    data:"nim"
+                    title: "NIM",
+                    data: "nim"
                 },
                 {
-                    title:"Nama",
-                    data:"nama"
+                    title: "Nama",
+                    data: "nama"
                 },
                 {
-                    title:"Judul",
-                    data:"judul"
+                    title: "Judul",
+                    data: "judul"
                 },
                 {
-                    title:"Penguji 1",
-                    data:"penguji1"
+                    title: "Penguji 1",
+                    data: "penguji1"
                 },
                 {
-                    title:"Penguji 2",
-                    data:"penguji2"
+                    title: "Penguji 2",
+                    data: "penguji2"
                 },
                 {
-                    title:"Penguji 3",
-                    data:"penguji3"
+                    title: "Penguji 3",
+                    data: "penguji3"
                 },
-                
+                {
+                    title: "Pelaksana",
+                    data: "pelaksana"
+                },
+
             ]
         ]
 
     }
-    
+
     // async componentDidMount(){
     //     console.log("props",this.koloms[0]);
     //     // this.setState({ history: this.props.history })
@@ -147,7 +151,7 @@ class Propsal extends React.Component{
     // }
 
     componentDidMount = () => {
-       
+
         this.setState({ history: this.props.history })
         // console.log(this.props.history.location.pathname);
         // switch (this.props.history.location.pathname) {
@@ -172,15 +176,15 @@ class Propsal extends React.Component{
         // }
     }
 
-    render(){
-        const kolom = this.props.history.location.pathname === '/admin/hasil' ? this.koloms[1] :  this.props.history.location.pathname === '/admin/kompren' ? this.koloms[2] :  this.koloms[0]
+    render() {
+        const kolom = this.props.history.location.pathname === '/admin/hasil' ? this.koloms[1] : this.props.history.location.pathname === '/admin/kompren' ? this.koloms[2] : this.koloms[0]
         const route = this.props.history.location.pathname === '/admin/hasil' ? 'Formhasil' : this.props.history.location.pathname === '/admin/tutup' ? 'Formtutup' : this.props.history.location.pathname === '/admin/kompren' ? 'Formkompren' : 'Formproposal'
-        
+
         // console.log("asdasd",this.state.endPoint);
-        return(
+        return (
             <>
-           <Tabel kolom={kolom} route={route} history={this.props.history} />
-            
+                <Tabel kolom={kolom} route={route} history={this.props.history} />
+
             </>
         )
     }

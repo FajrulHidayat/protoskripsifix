@@ -6,7 +6,7 @@ import UbahDom from '../../utils/UbahDom'
 import axios from "axios";
 import FormatDate from '../../utils/FormatDate'
 import moment from 'moment'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 class TabelJfu extends React.Component {
@@ -17,8 +17,8 @@ class TabelJfu extends React.Component {
     kolom: [],
     history: [],
     modalKey: '',
-    nomor: "",
-    pelaksana: "",
+    nomor: "0",
+    pelaksana: "-",
     route: "/jfu",
     endPoint: ``,
     isModalVisible: false,
@@ -281,8 +281,8 @@ class TabelJfu extends React.Component {
           textToHighlight={text ? text.toString() : ''}
         />
       ) : (
-          text
-        ),
+        text
+      ),
   });
 
   handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -354,17 +354,17 @@ class TabelJfu extends React.Component {
         }
       }
       console.log("modal Data ", data);
-      this.setState({ dataModal: data })
+      this.setState({ dataModal: data, nomor: record.nomor, pelaksana: record.pelaksana })
     });
     console.log("record : ", record);
   };
 
   handleOk = (e) => {
     this.setState({ isModalVisible: false });
-    console.log("submit",e);
-    console.log("tentang",this.state.tentang);
-    let pelaksana="-"
-    if(e.pelaksana) pelaksana=e.pelaksana
+    console.log("submit", e);
+    // console.log("tentang",this.state.tentang);
+    let pelaksana = "-"
+    if (e.pelaksana) pelaksana = e.pelaksana
     const body = {
       nomor: e.nomor,
       pelaksana: pelaksana
@@ -382,10 +382,51 @@ class TabelJfu extends React.Component {
   };
 
   onChange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    this.setState({ [name]: value })
-    console.log(this.state[name]);
+    const { dataModal } = this.state
+    let dataM = dataModal
+    const name = e[0].name[0]
+    const value = e[0].value
+    let nomor
+    let pelaksana = "-"
+    console.log(e);
+    dataModal.map((data, index) => {
+      // if (data.name === name) {
+      if (data.name === "nomor" && name === "nomor") {
+        nomor = value
+      }
+      if (data.name === "pelaksana" && name === "pelaksana") {
+        pelaksana = value
+      }
+      this.setState({ nomor: nomor, pelaksana: pelaksana })
+      console.log(this.state.nomor + " " + this.state.pelaksana);
+      // dataM[index].value = value
+      // console.log(dataM);
+      // this.setState({ dataModal: dataM })
+      // console.log(data.value);
+      // }
+    })
+
+
+    // const value = e.target.value
+    // this.setState({ [name]: value })
+    // console.log(this.state[name]);
+    // console.log(dataModal);
+  }
+  onPreview = () => {
+    // console.log(this.state.dataModal);
+    console.log(this.state.nomor + " " + this.state.pelaksana);
+    // const { dataModal } = this.state
+    // let nomor
+    // let pelaksana = "-"
+    // dataModal.map((data, index) => {
+    //   if (data.name === "nomor") {
+    //     nomor = data.value
+    //   }
+    //   if (data.name === "pelaksana") {
+    //     pelaksana = data.value
+    //   }
+    // })
+    // UbahDom(`/SkPreview/${this.state.modalKey}/${nomor}/${pelaksana}`, this.props.history)
   }
 
   render() {
@@ -492,7 +533,7 @@ class TabelJfu extends React.Component {
               pathname: `/pdfPreview/${record.key}`,
               // search:`?id=${record.id_surat}`
             }
-           } >Lihat</Link>),
+          } >Lihat</Link>),
         }
 
       ],
@@ -515,9 +556,9 @@ class TabelJfu extends React.Component {
         <Table columns={col} dataSource={this.state.data} />
         {/* modal */}
         <Modal title="Penomoran SK" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} footer={null}>
-        
+
           <Form {...layout} name="nest-messages" onFinish={this.handleOk}
-            fields={dataModal}
+            fields={dataModal} onFieldsChange={this.onChange}
           >
             <Form.Item
               key={20}
@@ -548,12 +589,21 @@ class TabelJfu extends React.Component {
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <Button type="primary" htmlType="submit">
                 Submit
-            </Button>
+              </Button>
+              <Button type="secondary" onClick={this.onPreview}>
+                <Link target="_blank" to={
+                  {
+                    pathname: `/SkPreview/${this.state.modalKey}/${this.state.nomor}/${this.state.pelaksana}`,
+                    // search:`?id=${record.id_surat}`
+                  }
+                } >Preview</Link>
+              </Button>
             </Form.Item>
           </Form>
 
-        </Modal>
-      </div>
+
+        </Modal >
+      </div >
     );
   }
 }
