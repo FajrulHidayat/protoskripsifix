@@ -16,6 +16,7 @@ class App extends React.Component {
         <Route exact path="/pdfPreview/:id" component={components.Pdf} />
         <Route exact path="/SkPreview/:id" component={components.SK}></Route>
         <Route exact path="/SkPreview/:id/:nomor/:pelaksana" component={components.SK}></Route>
+        <Route exact path="/Permohonan/:id/:jenis" component={components.SP}></Route>
       </Router>
       // <div className="App">
       //   <header className="App-header">

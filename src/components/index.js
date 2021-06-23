@@ -4,6 +4,7 @@ import Login from './Login'
 import Forbidden from './Forbidden'
 import Pdf from './PDFView'
 import SK from './PDFPreview'
+import SP from './SuratPermohonan/SuratPermohonan'
 
 export const components = {
     Dashboard,
@@ -11,6 +12,7 @@ export const components = {
     Login,
     Forbidden,
     Pdf,
-    SK
+    SK,
+    SP
 }
 

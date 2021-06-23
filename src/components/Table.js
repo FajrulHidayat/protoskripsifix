@@ -4,6 +4,7 @@ import Highlighter from 'react-highlight-words';
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import UbahDom from '../utils/UbahDom'
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import FormatDate from '../utils/FormatDate'
 import moment from 'moment-timezone'
 // import { Route } from "react-dom";
@@ -63,6 +64,7 @@ class Tabel extends React.Component {
     kolom: [],
     history: [],
     route: "/admin/Form",
+    jenis: "judul",
     endPoint: `/master/judul`
   };
   columns = [
@@ -100,15 +102,32 @@ class Tabel extends React.Component {
       title: 'Aksi',
       dataIndex: 'aksi',
       key: 'aksi',
-      render: (text, record) => (<Button onClick={() => UbahDom(`${this.state.route}/${record.nim}`, this.props.history)}>Edit</Button>),
+      render: (text, record) => (<Link target="_blank" to={
+        {
+          pathname: `/Permohonan/${record.id}/${this.state.jenis}`,
+          // search:`?id=${record.id_surat}`
+        }
+      } >Lihat</Link>
+        // <Button onClick={() => UbahDom(`Permohonan/${record.id}/${this.state.route}`, this.props.history)}>Lihat</Button>
+      ),
     }
   ]
+  columnsEdit = {
+    title: 'Aksi',
+    dataIndex: 'aksi',
+    key: 'aksi',
+    render: (text, record) => (
+      <Button onClick={() => UbahDom(`${this.state.route}/${record.nim}`, this.props.history)}>Edit</Button>
+    ),
+  }
 
   async componentDidMount() {
     console.log(this.props);
     if (this.props.route) {
       this.setState({ route: this.props.route })
-
+    }
+    if (this.props.jenis) {
+      this.setState({ jenis: this.props.jenis })
     }
     if (this.props.history) {
       this.setState({ history: this.props.history })
@@ -117,7 +136,7 @@ class Tabel extends React.Component {
         case "/admin/proposal":
           await this.setState({ endPoint: `/master/proposal` })
           break;
-        
+
         case "/admin/hasil":
           await this.setState({ endPoint: `/master/hasil` })
           break;
@@ -126,6 +145,9 @@ class Tabel extends React.Component {
           break;
         case "/admin/tutup":
           await this.setState({ endPoint: `/master/tutup` })
+          break;
+        case "/admin/mahasiswa":
+          await this.setState({ endPoint: `/master/mahasiswa` })
           break;
 
         default:
@@ -147,10 +169,15 @@ class Tabel extends React.Component {
           }
         )
       ))
-      kolom.push(this.columns[5])
-      console.log("kolom table",this.columns );
-      this.setState({ kolom: kolom })
-
+      if (this.props.jenis === "mahasiswa") {
+        kolom.push(this.columnsEdit)
+        console.log("kolom table", this.columns);
+        this.setState({ kolom: kolom })
+      } else {
+        kolom.push(this.columns[5])
+        console.log("kolom table", this.columns);
+        this.setState({ kolom: kolom })
+      }
     } else {
       this.setState({ kolom: this.columns })
     }
@@ -173,11 +200,11 @@ class Tabel extends React.Component {
           for (let i = 0; i <= ind.length; i++) {
             if (i === ind.length)
               data.key = index
-            else if (ind[i] === "waktu"){
-              data[ind[i]] =moment(qd[ind[i]]).format  ("DD MMMM YYYY HH:mm:ss")
+            else if (ind[i] === "waktu") {
+              data[ind[i]] = moment(qd[ind[i]]).format("DD MMMM YYYY HH:mm:ss")
               // data[ind[i]] = moment(qd[ind[i]], "DD-MM-YYYY HH:mm:ss")
               // console.log( moment(qd[ind[i]], "DD-MM-YYYY HH:mm:ss"));
-              
+
             }
             else
               data[ind[i]] = qd[ind[i]]
@@ -253,8 +280,8 @@ class Tabel extends React.Component {
           textToHighlight={text ? text.toString() : ''}
         />
       ) : (
-          text
-        ),
+        text
+      ),
   });
 
   handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -275,15 +302,15 @@ class Tabel extends React.Component {
     console.log(this.props);
     return (
       <div>
-        <div style={{ marginBottom: 16 }}>
+        {this.state.jenis !== "mahasiswa" ? <div style={{ marginBottom: 16 }}>
           <Button type="primary"
             onClick={() => UbahDom(this.state.route, this.props.history)}
             //  {...console.log(this.props)}
             icon={<PlusOutlined />}>
-            Tabmah
+            Tambah
           </Button>
 
-        </div>
+        </div> : <></>}
         <Table columns={this.state.kolom} dataSource={this.state.data} />
       </div>
     );

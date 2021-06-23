@@ -124,7 +124,29 @@ class Propsal extends React.Component {
                     data: "pelaksana"
                 },
 
-            ]
+            ],
+            [
+                {
+                    title: "NIM",
+                    data: "nim"
+                },
+                {
+                    title: "Nama",
+                    data: "nama"
+                },
+                {
+                    title: "Email",
+                    data: "email"
+                },
+                {
+                    title: "Jurusan",
+                    data: "jurusan"
+                },
+                {
+                    title: "Fakultas",
+                    data: "fakultas"
+                }
+            ],
         ]
 
     }
@@ -177,13 +199,14 @@ class Propsal extends React.Component {
     }
 
     render() {
-        const kolom = this.props.history.location.pathname === '/admin/hasil' ? this.koloms[1] : this.props.history.location.pathname === '/admin/kompren' ? this.koloms[2] : this.koloms[0]
-        const route = this.props.history.location.pathname === '/admin/hasil' ? 'Formhasil' : this.props.history.location.pathname === '/admin/tutup' ? 'Formtutup' : this.props.history.location.pathname === '/admin/kompren' ? 'Formkompren' : 'Formproposal'
+        const kolom = this.props.history.location.pathname === '/admin/hasil' ? this.koloms[1] : this.props.history.location.pathname === '/admin/kompren' ? this.koloms[2] : this.props.history.location.pathname === '/admin/mahasiswa' ? this.koloms[3] : this.koloms[0]
+        const route = this.props.history.location.pathname === '/admin/hasil' ? 'Formhasil' : this.props.history.location.pathname === '/admin/tutup' ? 'Formtutup' : this.props.history.location.pathname === '/admin/kompren' ? 'Formkompren' : this.props.history.location.pathname === '/admin/mahasiswa' ? 'Formmahasiswa' : 'Formproposal'
+        const jenis = this.props.history.location.pathname === '/admin/hasil' ? 'hasil' : this.props.history.location.pathname === '/admin/tutup' ? 'tutup' : this.props.history.location.pathname === '/admin/kompren' ? 'kompren' : this.props.history.location.pathname === '/admin/mahasiswa' ? 'mahasiswa' : "proposal"
 
         // console.log("asdasd",this.state.endPoint);
         return (
             <>
-                <Tabel kolom={kolom} route={route} history={this.props.history} />
+                <Tabel kolom={kolom} route={route} jenis={jenis} history={this.props.history} />
 
             </>
         )

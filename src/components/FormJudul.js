@@ -26,6 +26,10 @@ class FormJudul extends React.Component {
       formEdit: false,
       forms: [
         {
+          label: "Nomor",
+          name: "nomor"
+        },
+        {
           label: "NIM",
           name: "nim"
         },
@@ -39,6 +43,28 @@ class FormJudul extends React.Component {
         },
       ]
     }
+    this.formMahasiswa = [
+      {
+        label: "NIM",
+        name: "nim"
+      },
+      {
+        label: "Nama",
+        name: "nama"
+      },
+      {
+        label: "Email",
+        name: "email"
+      },
+      {
+        label: "Jurusan",
+        name: "jurusan"
+      },
+      {
+        label: "Fakultas",
+        name: "fakultas"
+      },
+    ]
     this.form = [
       [
         {
@@ -201,6 +227,14 @@ class FormJudul extends React.Component {
           this.tambahForm(1)
           this.getDataForm(id)
           break;
+        case "/admin/Formmahasiswa/:id":
+          // console.log("switch3",this.props.match.path);
+          await this.setState({ redirect: "/admin/mahasiswa" })
+          await this.setState({ endPointFrom: "/master/mahasiswa" })
+          await this.setState({ endPointTo: "/master/mahasiswa", formEdit: true })
+          this.gantiForm(1)
+          this.getDataForm(id)
+          break;
 
         default:
           await this.setState({ redirect: "/admin/", endPointFrom: "/master/mahasiswa", endPointTo: "/master/judul" })
@@ -226,6 +260,10 @@ class FormJudul extends React.Component {
       form.push(f)
     }
     this.setState({ forms: form })
+
+  }
+  gantiForm() {
+    this.setState({ forms: this.formMahasiswa })
 
   }
 
@@ -387,7 +425,7 @@ class FormJudul extends React.Component {
           let dis = false
           let input
           if (this.props.match) {
-            if (this.props.match.params.id && (form.name === "nim" || form.name === "nama")) {
+            if (this.props.match.params.id && (form.name === "nim" || form.name === "nama" || form.name === "jurusan" || form.name === "fakultas")) {
               dis = true
             } else {
               dis = false
@@ -476,7 +514,7 @@ class FormJudul extends React.Component {
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Simpan
           </Button>
         </Form.Item>
       </Form>

@@ -382,29 +382,32 @@ class TabelJfu extends React.Component {
   };
 
   onChange = (e) => {
-    const { dataModal } = this.state
-    let dataM = dataModal
-    const name = e[0].name[0]
-    const value = e[0].value
-    let nomor
-    let pelaksana = "-"
     console.log(e);
-    dataModal.map((data, index) => {
-      // if (data.name === name) {
-      if (data.name === "nomor" && name === "nomor") {
-        nomor = value
-      }
-      if (data.name === "pelaksana" && name === "pelaksana") {
-        pelaksana = value
-      }
-      this.setState({ nomor: nomor, pelaksana: pelaksana })
-      console.log(this.state.nomor + " " + this.state.pelaksana);
-      // dataM[index].value = value
-      // console.log(dataM);
-      // this.setState({ dataModal: dataM })
-      // console.log(data.value);
-      // }
-    })
+    if (e.length > 0) {
+      const { dataModal } = this.state
+      let dataM = dataModal
+      const name = e[0].name[0]
+      const value = e[0].value
+      let nomor
+      let pelaksana = "-"
+      console.log(e);
+      dataModal.map((data, index) => {
+        // if (data.name === name) {
+        if (data.name === "nomor" && name === "nomor") {
+          nomor = value
+        }
+        if (data.name === "pelaksana" && name === "pelaksana") {
+          pelaksana = value
+        }
+        this.setState({ nomor: nomor, pelaksana: pelaksana })
+        console.log(this.state.nomor + " " + this.state.pelaksana);
+        // dataM[index].value = value
+        // console.log(dataM);
+        // this.setState({ dataModal: dataM })
+        // console.log(data.value);
+        // }
+      })
+    }
 
 
     // const value = e.target.value
@@ -588,7 +591,7 @@ class TabelJfu extends React.Component {
             })}
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <Button type="primary" htmlType="submit">
-                Submit
+                Simpan
               </Button>
               <Button type="secondary" onClick={this.onPreview}>
                 <Link target="_blank" to={
@@ -596,7 +599,7 @@ class TabelJfu extends React.Component {
                     pathname: `/SkPreview/${this.state.modalKey}/${this.state.nomor}/${this.state.pelaksana}`,
                     // search:`?id=${record.id_surat}`
                   }
-                } >Preview</Link>
+                } >Pratinjau</Link>
               </Button>
             </Form.Item>
           </Form>

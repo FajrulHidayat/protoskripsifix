@@ -38,6 +38,7 @@ export default function DashboardAdmin(props) {
 
   const [collapsed, setCollapsed] = useState(false);
   const [akun, setakun] = useState([])
+  const [IsReady, setIsReady] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false);
   // const [collapsed,setCollapsed] = useState(false);
   //   onCollapse = collapsed => {
@@ -66,6 +67,7 @@ export default function DashboardAdmin(props) {
 
             setakun(resp.data.result)
             console.log(resp.data.result);
+            setIsReady(true)
           })
           .catch((error) => {
 
@@ -118,6 +120,10 @@ export default function DashboardAdmin(props) {
     const { history } = props;
     history.push("/admin");
     switch (e.key) {
+      case "0": {
+        history.push("admin/mahasiswa");
+        return;
+      }
       case "1": {
         history.push("admin/");
         return;
@@ -207,6 +213,9 @@ export default function DashboardAdmin(props) {
         </div>
         {level === "operator jurusan" ?
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleClick}>
+            <Menu.Item key="0" icon={<TeamOutlined />}>
+              Mahasiswa
+            </Menu.Item>
             <Menu.Item key="1" icon={<TeamOutlined />}>
               Pembimbing
             </Menu.Item>
@@ -304,6 +313,8 @@ export default function DashboardAdmin(props) {
                 </Breadcrumb> */}
           <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
             {level === "operator jurusan" ? <>
+              <Route exact path="/admin/mahasiswa" component={Proposal}></Route>
+              <Route exact path="/admin/Formmahasiswa/:id" component={FormJudul}></Route>
               <Route exact path="/admin/" component={Tabel}></Route>
               <Route exact path="/admin/Form/:id" component={FormJudul}></Route>
               <Route exact path="/admin/Form" component={FormJudul}></Route>
@@ -344,8 +355,8 @@ export default function DashboardAdmin(props) {
               <Route exact path="/admin/dkArsip" component={TablePimpinan}></Route>
             </> : null}
 
-            <Route path="/admin/pdf/:id" component={PDFView}></Route>
-            <Route path="/admin/pdfPreview/:id" component={PDFView}></Route>
+            {IsReady && <Route path="/admin/pdf/:id" component={PDFView}></Route>}
+            {IsReady && <Route path="/admin/pdfPreview/:id" component={PDFView}></Route>}
 
             {/* <Route exact path="/admin/" component={Tabel}></Route>
                 <Route exact path="/admin/Form/:id" component={FormJudul}></Route>

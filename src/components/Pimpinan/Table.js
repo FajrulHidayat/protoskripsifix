@@ -8,7 +8,7 @@ import FormatDate from '../../utils/FormatDate'
 import moment from 'moment'
 import { PDFViewer } from '@react-pdf/renderer';
 import Docu from '../PDFtest'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 class TabelJfu extends React.Component {
@@ -24,21 +24,21 @@ class TabelJfu extends React.Component {
     route: "",
     endPoint: ``,
     isModalVisible: false,
-    dataModal:[],
+    dataModal: [],
     tentang: ""
   };
- 
+
 
   async componentDidMount() {
     // console.log(this.props);
     const level = localStorage.getItem("level")
     if (this.props.match.path === `/admin/${level}`) {
-      await this.setState({ endPoint: "baru",route:`/${level}` })
+      await this.setState({ endPoint: "baru", route: `/${level}` })
       this.getData()
     }
     if (this.props.match.path === `/admin/${level}Arsip`) {
       // console.log("2",this.props.match.path);
-      await this.setState({ endPoint: "arsip",route:`/${level}` })
+      await this.setState({ endPoint: "arsip", route: `/${level}` })
       this.getData()
     }
 
@@ -141,8 +141,8 @@ class TabelJfu extends React.Component {
           textToHighlight={text ? text.toString() : ''}
         />
       ) : (
-          text
-        ),
+        text
+      ),
   });
 
   handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -159,7 +159,7 @@ class TabelJfu extends React.Component {
   };
 
   showModal = async (record) => {
-    
+
     await this.setState({ isModalVisible: true, modalKey: record.key })
     const token = localStorage.getItem("token")
 
@@ -175,17 +175,17 @@ class TabelJfu extends React.Component {
       // UbahDom(this.state.redirect,this.props.history)
       console.log(res.data.result);
       const data = res.data.result
-      
-      this.setState({ dataModal: data , tentang: record.tentang})
+
+      this.setState({ dataModal: data, tentang: record.tentang })
     });
     console.log("record : ", record);
   };
 
   handleOk = (e) => {
     this.setState({ isModalVisible: false });
-    console.log("submin",e);
-    let pelaksana="-"
-    if(e.pelaksana) pelaksana=e.pelaksana
+    console.log("submin", e);
+    let pelaksana = "-"
+    if (e.pelaksana) pelaksana = e.pelaksana
     const body = {
       nomor: e.nomor,
       pelaksana: pelaksana
@@ -267,12 +267,12 @@ class TabelJfu extends React.Component {
           title: 'Aksi',
           dataIndex: 'aksi',
           key: 'aksi',
-          render: (text, record) => (<Link target="_blank" to={
+          render: (text, record) => (<Link to={
             {
               pathname: `/admin/pdf/${record.key}`,
               // search:`?id=${record.id_surat}`
             }
-           } >Edit</Link>),
+          } >Lihat</Link>),
         }
       ],
       [
@@ -340,10 +340,10 @@ class TabelJfu extends React.Component {
         <Table columns={col} dataSource={this.state.data} />
         {/* modal */}
         <Modal title="Penomoran SK" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} footer={null} width="700">
-          <PDFViewer  width="100%" height="500vh">
-            <Docu data={this.state.dataModal} tentang={this.state.tentang}/>
-          </PDFViewer> 
-          
+          <PDFViewer width="100%" height="500vh">
+            <Docu data={this.state.dataModal} tentang={this.state.tentang} />
+          </PDFViewer>
+
         </Modal>
       </div>
     );
