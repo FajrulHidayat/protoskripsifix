@@ -127,7 +127,7 @@ const TextPoint = props => {
     // console.log(props)
     return (
         <View style={styles.row}>
-            <Text style={[styles.text, { width: "100px" }]}><Bold font={"arial"} text={props.text1} /></Text>
+            <Text style={[styles.text, { width: "100px", lineHeight: "1.5pt" }]}><Bold font={"arial"} text={props.text1} /></Text>
 
             <Text style={[styles.text, { width: "10px" }]}><Bold font={"arial"} text={props.text2} /></Text>
             {props.text1 === "Jurusan/Prodi" ?
@@ -374,7 +374,7 @@ const MyDocument = (props) => {
     // )
     return (
         <Document>
-            <Page size="A4" style={styles.page} wrap={true}>
+            <Page size={[595.28, 935, 43]} style={styles.page} wrap={true}>
                 <View style={styles.image}>
                     <Image src={logo}></Image>
                 </View>
@@ -396,7 +396,7 @@ const MyDocument = (props) => {
                 </Canvas>
                 <View style={styles.col}>
                     <View style={styles.row}>
-                        <Text style={[styles.text, { width: "40px" }]}>Nomor</Text>
+                        <Text style={[styles.text, { width: "40px", lineHeight: "1.5pt" }]}>Nomor</Text>
                         <Text style={[styles.text, { width: "10px" }]}>:</Text>
                         <Text style={[styles.text, { width: "230px" }]}><Bold text={props.data.nomor} font={"arial"} /></Text>
                         <Text style={[styles.text, { width: "200px" }]}>Romang Polong, <Bold text={`${moment(props.data.createAt).format('DD MMMM YYYY')}`} font={"arial"} /> </Text>
@@ -435,7 +435,7 @@ const MyDocument = (props) => {
                     <Text style={styles.textBI}>Assalamualaikum Warahmatullahi Wabarakatuh</Text>
                 </View>
                 <View style={[{ marginTop: "16px" }]}>
-                    <Text style={styles.text}>Dalam rangka penyelesaian Tugas Akhir mahasiswa Fakultas Sains dan Teknologi UIN Alauddin Makassar, maka bersama dengan ini kami memohon kepada Dekan kiranya menerbitkan Surat Keputusan {
+                    <Text style={[styles.text, { lineHeight: "1.5pt" }]}>Dalam rangka penyelesaian Tugas Akhir mahasiswa Fakultas Sains dan Teknologi UIN Alauddin Makassar, maka bersama dengan ini kami memohon kepada Dekan kiranya menerbitkan Surat Keputusan {
                         props.jenis === "judul" ?
                             <Bold font={"arial"} text={"Pembimbing Skripsi"} />
                             :
@@ -459,7 +459,7 @@ const MyDocument = (props) => {
                         <TextPoint key={index} text1={data.text1} text2={data.text2} text3={data.text3} data={props.data} />
                     ))}
                 </View>
-                {props.jenis !== "pembimbing" ?
+                {props.jenis !== "judul" ?
                     <View style={[{ marginTop: "30px" }]}>
                         <Text style={styles.textBI}>Adapun Komposisi Dewan Penguji dan Pelaksana Seminar {
                             props.judul === "hasil" ?
@@ -507,8 +507,8 @@ const MyDocument = (props) => {
                     <Text style={styles.text}>Demikian, atas perhatian dan dukungan Bapak, kami ucapkan terima kasih</Text>
                 </View>
                 <View style={[{ marginLeft: "250px", marginTop: "32px" }]}>
-                    <Text style={styles.textBI}>Wassalam</Text>
-                    <Text style={styles.textB}>Ketua/Sekretaris</Text>
+                    <Text style={[styles.textBI, { lineHeight: "2pt" }]}>Wassalam</Text>
+                    <Text style={[styles.textB, { lineHeight: "1.5pt" }]}>Ketua/Sekretaris</Text>
                     <Text style={styles.textB}>Jurusan Teknik Informatika</Text>
                     <Text style={[styles.textB, { marginTop: "32px" }]}>Faisal, S.T., M.T.</Text>
                     <Text style={styles.textB}>NIP. 19720721 201101 1 001</Text>

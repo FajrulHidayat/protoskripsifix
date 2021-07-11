@@ -205,17 +205,22 @@ export default function DashboardAdmin(props) {
   const level = localStorage.getItem("level")
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={() => setCollapsed(!collapsed)}>
+      <Sider
+        // collapsible collapsed={collapsed} onCollapse={() => setCollapsed(!collapsed)} 
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+        }}>
         <div className="logo">
           <img alt="" src={`http://localhost:9000/image/${akun.foto}`} />
           <h3>{akun.nama}</h3>
-          <h6>{akun.jabatan === "operator jurusan" ? "Operator Jurusan" : akun.jabatan === "jfu" ? "Staff Akademik" : akun.jabatan === "ksb" ? "Kasubag" : akun.jabatan === "ktu" ? "Kepala Tata Usaha" : akun.jabatan === "wd" ? "Wakil Dekan I" : akun.jabatan === "dk" ? "Dekan" : ""}</h6>
+          <h6>{akun.jabatan === "operator jurusan" ? "Operator Jurusan" : akun.jabatan === "jfu" ? "Staf Akademik" : akun.jabatan === "ksb" ? "Kasubag" : akun.jabatan === "ktu" ? "Kabag Tata Usaha" : akun.jabatan === "wd" ? "Wakil Dekan I" : akun.jabatan === "dk" ? "Dekan" : ""}</h6>
         </div>
         {level === "operator jurusan" ?
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleClick}>
-            <Menu.Item key="0" icon={<TeamOutlined />}>
-              Mahasiswa
-            </Menu.Item>
+
             <Menu.Item key="1" icon={<TeamOutlined />}>
               Pembimbing
             </Menu.Item>
@@ -229,10 +234,13 @@ export default function DashboardAdmin(props) {
               Ujian Komprehensif
             </Menu.Item>
             <Menu.Item key="5" icon={<BookOutlined />}>
-              Seminar Tutup
+              Munaqasyah
             </Menu.Item>
             <Menu.Item key="6" icon={<InboxOutlined />}>
               SK Jadi
+            </Menu.Item>
+            <Menu.Item key="0" icon={<TeamOutlined />}>
+              Mahasiswa
             </Menu.Item>
             {/* <SubMenu key="sub1" icon={<UserOutlined />} title="User">
                   <Menu.Item key="3">Tom</Menu.Item>
@@ -287,7 +295,7 @@ export default function DashboardAdmin(props) {
             </Menu.Item>
           </Menu> : null}
         <div >
-          <Menu style={{ position: "absolute", bottom: "50px" }} theme="dark" mode="inline" onClick={logout}>
+          <Menu style={{ position: "relative", bottom: "0px" }} theme="dark" mode="inline" onClick={logout}>
             <Menu.Item key="99" icon={<PoweroffOutlined />}>
               Keluar
             </Menu.Item>
@@ -304,9 +312,9 @@ export default function DashboardAdmin(props) {
               Keluar
             </Button> */}
       </Sider>
-      <Layout className="site-layout">
+      <Layout className="site-layout" style={{ marginLeft: 200 }}>
         <Header className="site-layout-background" style={{ padding: 0 }} />
-        <Content style={{ margin: '0 16px' }}>
+        <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           {/* <Breadcrumb style={{ margin: '16px 0' }}>
                   <Breadcrumb.Item>User</Breadcrumb.Item>
                   <Breadcrumb.Item>Bill</Breadcrumb.Item>

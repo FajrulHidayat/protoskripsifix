@@ -399,7 +399,7 @@ const MyDocument = (props) => {
     ]
     return (
         <Document>
-            <Page size="A4" style={styles.page} wrap={true}>
+            <Page size={[595.28, 935, 43]} style={styles.page} wrap={true}>
                 <View style={styles.image}>
                     <Image src={logo}></Image>
                 </View>
@@ -462,7 +462,8 @@ const MyDocument = (props) => {
                         <Image style={{ position: 'absolute', width: "30px", marginLeft: "120px", marginTop: "20px" }} src={IsTtd(props.data.ksb_acc, 2)}></Image>
                     </View>
                 </View>
-
+            </Page>
+            <Page size={[595.28, 935, 43]} style={styles.page} wrap={true}>
                 <View style={{ marginTop: "50px" }}>
                     <Text style={styles.kop}>Memutuskan</Text>
                     {datas2.map((data, index) => (

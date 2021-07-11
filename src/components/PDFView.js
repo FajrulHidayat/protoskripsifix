@@ -96,7 +96,6 @@ const PDFView = (props) => {
 
     // console.log(...body)
 
-
     /*pdf document*/
     const element = doc();
     console.log("element", element);
@@ -114,15 +113,29 @@ const PDFView = (props) => {
     const formdata = new FormData();
     // let body
     await formdata.append("file", file);
-    formdata.append("tes", "asdasd")
+    formdata.append("nim", data.nim)
+    console.log(data);
+    let sk = data.tentang === "judul" ? `SK Pembimbing ${data.nim}`
+      :
+      data.tentang === "proposal" ? `SK Seminar Proposal ${data.nim}`
+        :
+        data.tentang === "hasil" ? `SK Seminar Hasil ${data.nim}`
+          :
+          data.tentang === "Kompren" ? `SK Ujian Komprehensif ${data.nim}`
+            :
+            data.tentang === "tutup" ? `SK Ujian Munaqasyah ${data.nim}`
+              :
+              `SK Pembimbing ${data.nim}`
+    formdata.append("sk", sk)
     console.log("formdata :", formdata)
     let Fdata = []
     for (var [key, value] of formdata.entries()) {
       console.log(key, value);
       Fdata.push(value)
     }
-    console.log(Fdata);
-    axios.post(`/email`, { body: { file: Fdata[0] } }, { headers: { 'content-type': 'multipart/form-data' } }).then((res) => {
+    console.log(Fdata[0]);
+    // axios.post(`/email`, { body: { file: Fdata, pdf: "asdasd" } }, { headers: { 'Content-Type': 'multipart/form-data' } }).then((res) => {
+    axios.post(`/email`, formdata, {}).then((res) => {
       console.log(res);
     }).catch((err) => {
       console.log(err);

@@ -1,9 +1,10 @@
 import React from 'react'
-import { Form, Input, Button, DatePicker, TimePicker } from 'antd';
+import { Form, Input, Button, DatePicker, TimePicker, InputNumber } from 'antd';
 import axios from 'axios'
 import UbahDom from '../utils/UbahDom'
 import moment from 'moment'
 import FormatDate from '../utils/FormatDate'
+import { now } from 'moment';
 
 
 class FormJudul extends React.Component {
@@ -147,15 +148,81 @@ class FormJudul extends React.Component {
 
       ],
     ]
+
   }
   async componentDidMount() {
     let id = false
     // console.log("props",this.props);
     // this.setState({pathname:this.props.history.location.pathname})
     // console.log("pathname",this.props);
+    const data = []
+    const sekarang = moment().toObject()
+    const kodeJurusan = {
+      name: "kodeJurusan",
+      value: "TI-UINAM"
+    }
+    let bulanRoman
+    switch (++sekarang.months) {
+      case 1:
+        bulanRoman = "I"
+        break;
+      case 2:
+        bulanRoman = "II"
+        break;
+      case 3:
+        bulanRoman = "III"
+        break;
+      case 4:
+        bulanRoman = "IV"
+        break;
+      case 5:
+        bulanRoman = "V"
+        break;
+      case 6:
+        bulanRoman = "VI"
+        break;
+      case 7:
+        bulanRoman = "VII"
+        break;
+      case 8:
+        bulanRoman = "VIII"
+        break;
+      case 9:
+        bulanRoman = "IX"
+        break;
+      case 10:
+        bulanRoman = "X"
+        break;
+      case 11:
+        bulanRoman = "XI"
+        break;
+      case 12:
+        bulanRoman = "XII"
+        break;
+
+      default:
+        break;
+    }
+    const bulan = {
+      name: "bulan",
+      value: bulanRoman
+    }
+
+    const tahun = {
+      name: "tahun",
+      value: sekarang.years
+    }
+    data.push(kodeJurusan)
+    data.push(bulan)
+    data.push(tahun)
+    console.log(data);
+    this.setState({ data: data })
+
     if (this.props.match) {
       id = this.props.match.params.id
       // console.log(id);
+
+
       switch (this.props.match.path) {
         case "/admin/Form":
           await this.setState({ redirect: "/admin/", endPointFrom: "/master/mahasiswa", endPointTo: "/master/judul" })
@@ -266,6 +333,9 @@ class FormJudul extends React.Component {
     this.setState({ forms: this.formMahasiswa })
 
   }
+  kembali = () => {
+    UbahDom(this.state.redirect, this.props.history)
+  }
 
   // sss = () => {
   //   let endPointFrom, redirect, endPointTo;
@@ -339,8 +409,8 @@ class FormJudul extends React.Component {
           }
           data.push(isi)
         }
+
       }
-      console.log(data);
       this.setState({ data: data })
     })
       .catch((error) => {
@@ -348,13 +418,14 @@ class FormJudul extends React.Component {
         const data = []
         let value = ""
         for (let i = 0; i < datas.length; i++) {
-          value = (i === 1) ? nim : ""
+          value = (data.name === "nim") ? nim : ((data.name === "kodeJurusan") || (data.name === "bulan") || (data.name === "tahun") || (data.name === "nomorSurat")) ? datas[i].value : ""
           const isi = {
             name: datas[i].name,
             value: value
           }
           data.push(isi)
         }
+        console.log(data);
         this.setState({ data: data })
         console.log(error);
       });
@@ -373,8 +444,9 @@ class FormJudul extends React.Component {
     console.log(values)
     const v = values
     v.tanggal = moment(v.tanggal).format('YYYY-MM-DD')
-    v.jam = moment(v.jam).format('HH:mm:ss')
+    v.jam = moment(v.jam).format('HH:mm')
     v.waktu = `${v.tanggal} ${v.jam}`
+    v.nomor = v.nomorSurat + "/" + v.kodeJurusan + "/" + v.bulan + "/" + v.tahun
     console.log('ss', v);
     if (this.props.match.params.id) {
       // console.log("update");
@@ -424,6 +496,7 @@ class FormJudul extends React.Component {
           //  console.log("form",form);
           let dis = false
           let input
+          let require = true
           if (this.props.match) {
             if (this.props.match.params.id && (form.name === "nim" || form.name === "nama" || form.name === "jurusan" || form.name === "fakultas")) {
               dis = true
@@ -432,11 +505,47 @@ class FormJudul extends React.Component {
             }
           }
           if (form.name === "tanggal") {
-            input = <DatePicker format="DD-MM-YYYY" />
+            input = <DatePicker format="DD-MM-YYYY" placeholder="Pilih Tanggal" />
           } else if (form.name === "jam") {
-            input = <TimePicker format="HH-mm-ss" />
+            input = <TimePicker format="HH-mm" placeholder="Pilih Waktu" />
+          } else if (form.name === "nim") {
+            input = <InputNumber stringMode={true} disabled={dis} style={{ width: "100%" }} />
+          } else if (form.name === "nomor") {
+            input = <>
+              <Form.Item
+                name="nomorSurat"
+                rules={[{ required: true }]}
+                style={{ display: 'inline-block', width: 'calc(25% - 8px)' }}
+              >
+                <Input placeholder="Nomor Surat" />
+              </Form.Item>
+              <Form.Item
+                name="kodeJurusan"
+                rules={[{ required: true }]}
+                style={{ display: 'inline-block', width: 'calc(25% - 8px)' }}
+              >
+                <Input placeholder="Kode Jurusan" />
+              </Form.Item>
+              <Form.Item
+                name="bulan"
+                rules={[{ required: true }]}
+                style={{ display: 'inline-block', width: 'calc(25% - 8px)' }}
+              >
+                <Input placeholder="Bulan" />
+              </Form.Item>
+              <Form.Item
+                name="tahun"
+                rules={[{ required: true }]}
+                style={{ display: 'inline-block', width: 'calc(25% - 8px)' }}
+              >
+                <Input placeholder="Tahun" />
+              </Form.Item>
+            </>
           } else {
             input = <Input disabled={dis} />
+          }
+          if (form.name === "nomor") {
+            require = false
           }
           return (
             <Form.Item
@@ -445,7 +554,7 @@ class FormJudul extends React.Component {
               label={form.label}
               rules={[
                 {
-                  required: true,
+                  required: require,
                 },
               ]}
 
@@ -515,6 +624,9 @@ class FormJudul extends React.Component {
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit">
             Simpan
+          </Button>
+          <Button onClick={this.kembali}>
+            Batal
           </Button>
         </Form.Item>
       </Form>

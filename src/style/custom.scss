@@ -91,6 +91,14 @@ aside {
   bottom: 0;
   // position: fixed;
 }
+#components-layout-demo-fixed-sider .logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.site-layout .site-layout-background {
+  background: #fff;
+}
 .logo {
   margin: 16px;
   // background: rgb(255, 255, 255);
@@ -100,12 +108,12 @@ aside {
   margin-right: auto;
   }
   h3{
-    color: #f0f0f0;
+    color: #ffffff;
     font-size: large;
     text-align: center;
   }
   h6{
-    color: #f0f0f0;
+    color: #ffffff;
     font-size: medium;
     text-align: center;
   }
@@ -114,7 +122,9 @@ aside {
     height: 150px;
     width: 150px;
   }
+
 }
+
 
 .site-layout .site-layout-background {
   background: #fff;
@@ -138,3 +148,21 @@ aside {
     }
   }
 }
+.ant-menu-item{
+  span{
+    color: #ffffff;
+    // font-weight: bold;
+  }
+} 
+// .ant-table-cell{
+//   font-weight: bold;
+// }
+// span{
+//   font-weight: bold;
+// }
+// th{
+//   font-weight: bold;
+// }
+// label{
+//   font-weight: bold;
+// }
