@@ -214,7 +214,8 @@ export default function DashboardAdmin(props) {
           left: 0,
         }}>
         <div className="logo">
-          <img alt="" src={`http://localhost:9000/image/${akun.foto}`} />
+          {/* <img alt="" src={`http://localhost:9000/image/${akun.foto}`} /> */}
+          <img alt="" src={`http://151.106.108.85:9000/image/${akun.foto}`} />
           <h3>{akun.nama}</h3>
           <h6>{akun.jabatan === "operator jurusan" ? "Operator Jurusan" : akun.jabatan === "jfu" ? "Staf Akademik" : akun.jabatan === "ksb" ? "Kasubag" : akun.jabatan === "ktu" ? "Kabag Tata Usaha" : akun.jabatan === "wd" ? "Wakil Dekan I" : akun.jabatan === "dk" ? "Dekan" : ""}</h6>
         </div>
