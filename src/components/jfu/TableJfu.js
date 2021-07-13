@@ -201,7 +201,7 @@ class TabelJfu extends React.Component {
         for (const qd of res.data.result) {
           const data = {}
           data.key = qd.id
-          data.nomor = qd.nomor
+          data.nomor = 0
           data.nim = qd.nim
           data.nama = qd.nama
           data.jurusan = qd.jurusan
@@ -335,7 +335,6 @@ class TabelJfu extends React.Component {
         data.push(pelaksana)
       }
       for (let i = 0; i < panjang; i++) {
-
         const key = Object.keys(res.data.result)[i]
         if (key === 'waktu') {
           const date = FormatDate(res.data.result[key]);
@@ -345,7 +344,7 @@ class TabelJfu extends React.Component {
           }
           data.push(isi)
         }
-        else {
+        else if (key !== 'nomor') {
           const isi = {
             name: key,
             value: res.data.result[key]
@@ -593,14 +592,14 @@ class TabelJfu extends React.Component {
               <Button type="primary" htmlType="submit">
                 Simpan
               </Button>
-              <Button type="secondary" onClick={this.onPreview}>
+              {/* <Button type="secondary" onClick={this.onPreview}>
                 <Link target="_blank" to={
                   {
                     pathname: `/SkPreview/${this.state.modalKey}/${this.state.nomor}/${this.state.pelaksana}`,
                     // search:`?id=${record.id_surat}`
                   }
                 } >Pratinjau</Link>
-              </Button>
+              </Button> */}
             </Form.Item>
           </Form>
 

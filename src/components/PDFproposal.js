@@ -618,7 +618,7 @@ const MyDocument = (props) => {
                     <Text style={{ marginTop: "8px" }} />
                     <Bold text="DEKAN FAKULTAS SAINS DAN TEKNOLOGI" />
                     <Text style={{ marginTop: "45px" }} />
-                    <Bold text="SJAMSIAH" />
+                    <Bold text="Prof. Dr. Muhammad Halifah Mustami, M.Pd" />
                     <Image style={{ position: 'absolute', width: "30px", bottom: "0px", right: "30px" }} src={IsTtd(props.data.wd_acc, 1)}></Image>
                     <Image style={{ position: 'absolute', width: "60px", bottom: "-20px", left: "0px" }} src={IsTtd(props.data.dk_acc, 1)}></Image>
 

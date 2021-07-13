@@ -370,11 +370,11 @@ const MyDocument = (props) => {
                     <Bold text={`Pada Tanggal ${moment(props.data.waktu).format('DD MMMM YYYY')}`} />
                     <Text style={{ marginTop: "8px" }} />
                     <Bold text="DEKAN FAKULTAS SAINS DAN TEKNOLOGI" />
-                    <Text>Kuasa No.: B339/Un.06/FST/Kp.07.6/02/2020</Text>
+                    {/* <Text>Kuasa No.: B339/Un.06/FST/Kp.07.6/02/2020</Text>
                     <Text>Tanggal 14 Februari 2020</Text>
-                    <Text>Wakil Dekan Bidang Akademik</Text>
+                    <Text>Wakil Dekan Bidang Akademik</Text> */}
                     <Text style={{ marginTop: "45px" }} />
-                    <Bold text="SJAMSIAH" />
+                    <Bold text="Prof. Dr. Muhammad Halifah Mustami, M.Pd" />
                     <Image style={{ position: 'absolute', width: "30px", bottom: "0px", right: "30px" }} src={IsTtd(props.data.wd_acc, 1)}></Image>
                     <Image style={{ position: 'absolute', width: "60px", bottom: "-20px", left: "0px" }} src={IsTtd(props.data.dk_acc, 1)}></Image>
 
