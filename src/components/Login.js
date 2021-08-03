@@ -1,7 +1,12 @@
-import React from 'react'
-import { Form, Input, Button, Checkbox } from 'antd';
-import axios from 'axios'
-import UbahDom from '../utils/UbahDom'
+import React from "react";
+import {
+  Form,
+  Input,
+  Button,
+  //  Checkbox
+} from "antd";
+import axios from "axios";
+import UbahDom from "../utils/UbahDom";
 // import Verify from '../utils/Verify'
 const layout = {
   labelCol: {
@@ -20,44 +25,45 @@ const tailLayout = {
 
 class Demo extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
   async componentDidMount() {
     // const verify =await Verify()
     // console.log(verify);
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     // console.log(token);
     if (token) {
       let headers = {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token,
+          Authorization: token,
         },
-        responseType: "json"
+        responseType: "json",
       };
       axios
         .post(`/auth/verify`, null, headers)
-        .then(res => {
+        .then((res) => {
           // console.log(res.data);
           if (res.data.diagnostic.status === 200) {
             // console.log(res.data.diagnostic.status);
-            if (res.data.result.type === 'operator jurusan') {
-              UbahDom(`/admin`, this.props.history)
+            if (res.data.result.type === "operator jurusan") {
+              UbahDom(`/admin`, this.props.history);
             }
-            if (res.data.result.type === 'jfu') {
-              UbahDom(`/admin/jfu`, this.props.history)
+            if (res.data.result.type === "jfu") {
+              UbahDom(`/admin/jfu`, this.props.history);
             }
-            if (res.data.result.type === 'ksb') {
-              UbahDom(`/admin/ksb`, this.props.history)
-            } if (res.data.result.type === 'ktu') {
-              UbahDom(`/admin/ktu`, this.props.history)
+            if (res.data.result.type === "ksb") {
+              UbahDom(`/admin/ksb`, this.props.history);
             }
-            if (res.data.result.type === 'wd') {
-              UbahDom(`/admin/wd`, this.props.history)
+            if (res.data.result.type === "ktu") {
+              UbahDom(`/admin/ktu`, this.props.history);
             }
-            if (res.data.result.type === 'dk') {
-              UbahDom(`/admin/dk`, this.props.history)
+            if (res.data.result.type === "wd") {
+              UbahDom(`/admin/wd`, this.props.history);
+            }
+            if (res.data.result.type === "dk") {
+              UbahDom(`/admin/dk`, this.props.history);
             }
           }
         })
@@ -69,50 +75,49 @@ class Demo extends React.Component {
     }
   }
   onFinish = (values) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
     // console.log('Success:', props);
     let headers = {
       headers: {
         "Content-Type": "application/json",
         nip: values.nip,
-        password: values.pass
+        password: values.pass,
       },
-      responseType: "json"
+      responseType: "json",
     };
     //   const { history } = this.props;
 
     axios
       .post(`/auth/login`, null, headers)
-      .then(res => {
+      .then((res) => {
         //   this.setState({ diagnostics: res.data.diagnostic });
         console.log(res.data);
         if (res.data.diagnostic.status === 200) {
-          const result = res.data.result
+          const result = res.data.result;
           localStorage.setItem("token", res.headers.authorization);
           localStorage.setItem("level", result.jabatan);
           // this.setState({ results: result });
           console.log(result);
-          if (result.jabatan === 'operator jurusan') {
-            UbahDom(`/admin`, this.props.history)
+          if (result.jabatan === "operator jurusan") {
+            UbahDom(`/admin`, this.props.history);
           }
-          if (result.jabatan === 'jfu') {
-            UbahDom(`/admin/jfu`, this.props.history)
+          if (result.jabatan === "jfu") {
+            UbahDom(`/admin/jfu`, this.props.history);
           }
-          if (result.jabatan === 'ksb') {
-            UbahDom(`/admin/ksb`, this.props.history)
+          if (result.jabatan === "ksb") {
+            UbahDom(`/admin/ksb`, this.props.history);
           }
-          if (result.jabatan === 'ktu') {
-            UbahDom(`/admin/ktu`, this.props.history)
+          if (result.jabatan === "ktu") {
+            UbahDom(`/admin/ktu`, this.props.history);
           }
-          if (result.jabatan === 'wd') {
-            UbahDom(`/admin/wd`, this.props.history)
+          if (result.jabatan === "wd") {
+            UbahDom(`/admin/wd`, this.props.history);
           }
-          if (result.jabatan === 'dk') {
-            UbahDom(`/admin/dk`, this.props.history)
+          if (result.jabatan === "dk") {
+            UbahDom(`/admin/dk`, this.props.history);
           }
           // Cookies.set("token", res.headers.authorization, { path: "/" });
         }
-
 
         // console.log(`react cookies : ${Cookies.load("token")}`);
       })
@@ -124,7 +129,7 @@ class Demo extends React.Component {
   };
 
   onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
   render() {
     return (
@@ -145,7 +150,7 @@ class Demo extends React.Component {
               rules={[
                 {
                   required: true,
-                  message: 'NIP Harus Di Isi',
+                  message: "NIP Harus Di Isi",
                 },
               ]}
             >
@@ -158,13 +163,12 @@ class Demo extends React.Component {
               rules={[
                 {
                   required: true,
-                  message: 'Password Harus Di Isi',
+                  message: "Password Harus Di Isi",
                 },
               ]}
             >
               <Input.Password />
             </Form.Item>
-
 
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit">
@@ -176,5 +180,5 @@ class Demo extends React.Component {
       </div>
     );
   }
-};
-export default Demo
+}
+export default Demo;

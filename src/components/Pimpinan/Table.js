@@ -1,11 +1,15 @@
 import React from 'react';
-import { Modal, Table, Input, Button, Space, Form } from 'antd';
+import { Modal, Table, Input, Button, Space, 
+  // Form 
+} from 'antd';
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
-import UbahDom from '../../utils/UbahDom'
+import { SearchOutlined, 
+  // PlusOutlined 
+} from '@ant-design/icons';
+// import UbahDom from '../../utils/UbahDom'
 import axios from "axios";
 import FormatDate from '../../utils/FormatDate'
-import moment from 'moment'
+// import moment from 'moment'
 import { PDFViewer } from '@react-pdf/renderer';
 import Docu from '../PDFtest'
 import { Link } from 'react-router-dom';
@@ -56,7 +60,7 @@ class TabelJfu extends React.Component {
       // console.log(res.data.result);
       this.setState({ diagnostics: res.data.diagnostic });
       if (this.state.diagnostics.status === 200) {
-        let index = 0;
+        // let index = 0;
         let datas = [];
         for (const qd of res.data.result) {
           const data = {}
@@ -70,7 +74,7 @@ class TabelJfu extends React.Component {
           data.id_surat = qd.id_surat
           data.waktu = FormatDate(qd.waktu)
 
-          index++
+          // index++
           datas.push(data)
         }
         this.setState({
@@ -163,7 +167,7 @@ class TabelJfu extends React.Component {
     await this.setState({ isModalVisible: true, modalKey: record.key })
     const token = localStorage.getItem("token")
 
-    const dateFormat = 'YYYY-MM-DD'
+    // const dateFormat = 'YYYY-MM-DD'
     let headers = {
       headers: {
         "Content-Type": "application/json",
@@ -324,15 +328,15 @@ class TabelJfu extends React.Component {
     const col = this.props.match.path === `/admin${this.state.route}` ? columns[0] : columns[1]
 
 
-    const layout = {
-      labelCol: {
-        span: 6,
-      },
-      wrapperCol: {
-        span: 12,
-      },
-    };
-    const { dataModal } = this.state
+    // const layout = {
+    //   labelCol: {
+    //     span: 6,
+    //   },
+    //   wrapperCol: {
+    //     span: 12,
+    //   },
+    // };
+    // const { dataModal } = this.state
     return (
       <div>
         {/* table */}

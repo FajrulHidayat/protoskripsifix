@@ -189,11 +189,11 @@ const IsTtd = (ttd, ke) => {
         return null
     }
 }
-const ttd1 = true;
-const ttd2 = false;
+// const ttd1 = true;
+// const ttd2 = false;
 
 const MyDocument = (props) => {
-    { console.log("pdf", props); }
+     console.log("pdf", props); 
     // moment.locale()
     // console.log(moment(props.data.waktu).format('DD MMMM YYYY'))
     useEffect(() => {
