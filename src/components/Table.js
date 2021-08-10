@@ -5,6 +5,7 @@ import {
   SearchOutlined,
   PlusOutlined,
   FilePdfOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import UbahDom from "../utils/UbahDom";
 import axios from "axios";
@@ -133,6 +134,11 @@ class Tabel extends React.Component {
     key: "aksi",
     render: (text, record) => (
       <Button
+        style={{
+          backgroundColor: "#17A2B8",
+          color: "white",
+        }}
+        icon={<EditOutlined />}
         onClick={() =>
           UbahDom(`${this.state.route}/${record.nim}`, this.props.history)
         }

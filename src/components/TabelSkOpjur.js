@@ -5,6 +5,7 @@ import {
   Input,
   Button,
   Space,
+  notification,
 
   //  Form
 } from "antd";
@@ -41,8 +42,10 @@ class TabelSkOpjur extends React.Component {
     route: "",
     endPoint: ``,
     isModalVisible: false,
+    isModalEmailVisible: false,
     dataModal: [],
     tentang: "",
+    sendData: {},
   };
 
   async componentDidMount() {
@@ -212,24 +215,49 @@ class TabelSkOpjur extends React.Component {
     // console.log("record : ", record);
     // this.setState({ isModalVisible: true });
   };
+  getEmailData = async (nim, id, tentang) => {
+    const token = localStorage.getItem("token");
 
-  handleOk = (e) => {
-    this.setState({ isModalVisible: false });
-    console.log("submin", e);
-    let pelaksana = "-";
-    if (e.pelaksana) pelaksana = e.pelaksana;
-    const body = {
-      nomor: e.nomor,
-      pelaksana: pelaksana,
+    // const dateFormat = 'YYYY-MM-DD'
+    let headers = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      responseType: "json",
     };
-    axios
-      .put(`${this.state.route}/${this.state.modalKey}`, body)
-      .then((res) => {
-        // UbahDom(this.state.redirect,this.props.history)
-        console.log(res);
-        this.getData();
+    await axios.get(`/master/mahasiswa/${nim}`, null, headers).then((res) => {
+      // UbahDom(this.state.redirect,this.props.history)
+      console.log(res.data.result);
+      // const data = res.data.result;
+
+      this.setState({
+        sendData: {
+          nim: res.data.result.nim,
+          email: res.data.result.email,
+          nama: res.data.result.nama,
+          tentang: tentang,
+          id: id,
+        },
+        isModalEmailVisible: true,
       });
-    console.log("state : ", this.state);
+    });
+    // console.log("record : ", record);
+    // this.setState({ isModalVisible: true });
+  };
+
+  openNotification = () => {
+    const args = {
+      message: "Berhasil",
+      description: "Pengiriman Email Berhasil",
+      duration: 3,
+    };
+    notification.open(args);
+  };
+
+  handleOk = async (id) => {
+    await this.sendEmail(id);
+    this.setState({ isModalEmailVisible: false });
   };
 
   handleCancel = () => {
@@ -263,7 +291,10 @@ class TabelSkOpjur extends React.Component {
           headers
         )
         .then((res) => {
-          console.log(res.data.result);
+          console.log(res.data);
+          // if (res.data.status === "200") {
+          this.openNotification();
+          // }
           dataSurat = res.data.result;
         });
     });
@@ -434,49 +465,54 @@ class TabelSkOpjur extends React.Component {
           title: "Aksi",
           dataIndex: "aksi",
           key: "aksi",
-          render: (text, record) => (
-            <>
-              <Link
-                target="_blank"
-                to={{
-                  pathname: `/SkPreview/${record.key}`,
-                  // search:`?id=${record.id_surat}`
-                }}
-              >
+          render: (text, record) => {
+            console.log(record);
+            return (
+              <>
+                <Link
+                  target="_blank"
+                  to={{
+                    pathname: `/SkPreview/${record.key}`,
+                    // search:`?id=${record.id_surat}`
+                  }}
+                >
+                  <Button
+                    style={{
+                      backgroundColor: "#FF4D4F",
+                      color: "white",
+                    }}
+                    icon={<FilePdfOutlined />}
+                  >
+                    Lihat
+                  </Button>
+                </Link>
+
                 <Button
                   style={{
-                    backgroundColor: "#FF4D4F",
+                    backgroundColor: "#1890FF",
                     color: "white",
                   }}
-                  icon={<FilePdfOutlined />}
+                  icon={<SendOutlined />}
+                  onClick={() =>
+                    this.getEmailData(record.nim, record.key, record.tentang)
+                  }
                 >
-                  Lihat
+                  Email
                 </Button>
-              </Link>
 
-              <Button
-                style={{
-                  backgroundColor: "#1890FF",
-                  color: "white",
-                }}
-                icon={<SendOutlined />}
-                onClick={() => this.sendEmail(record.key)}
-              >
-                email
-              </Button>
-
-              <Button
-                style={{
-                  backgroundColor: "#17A2B8",
-                  color: "white",
-                }}
-                icon={<ExceptionOutlined />}
-                onClick={() => this.getCatatan(record.key)}
-              >
-                Catatan
-              </Button>
-            </>
-          ),
+                <Button
+                  style={{
+                    backgroundColor: "#17A2B8",
+                    color: "white",
+                  }}
+                  icon={<ExceptionOutlined />}
+                  onClick={() => this.getCatatan(record.key)}
+                >
+                  Catatan
+                </Button>
+              </>
+            );
+          },
         },
       ],
     ];
@@ -545,6 +581,39 @@ class TabelSkOpjur extends React.Component {
               </div>
             );
           })}
+          {/* <p>halo</p> */}
+          {/* <p>Apakah Anda Ingin Keluar?</p> */}
+        </Modal>
+        <Modal
+          title="Kirim SK"
+          closable={true}
+          visible={this.state.isModalEmailVisible}
+          // bodyStyle={{ backgroundColor: "#f1f1f1" }}
+          // footer={null}
+          onOk={() => this.handleOk(this.state.sendData.id)}
+          onCancel={() => this.setState({ isModalEmailVisible: false })}
+          cancelText="Tidak"
+          okText="Ya"
+        >
+          {console.log(this.state.sendData)}
+          <p>
+            Apakah anda yakin ingin mengirim SK {this.state.sendData.tentang}{" "}
+            kepada mahasiswa atas nama {this.state.sendData.nama}, NIM{" "}
+            {this.state.sendData.nim} melalui Email {this.state.sendData.email}?
+          </p>
+
+          {/* return (
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "16px",
+              marginBottom: "8px",
+            }}
+          >
+            <h1>dari {jabatan}</h1>
+            <p key={index}>{item.komen}</p>
+          </div>
+          ); })} */}
           {/* <p>halo</p> */}
           {/* <p>Apakah Anda Ingin Keluar?</p> */}
         </Modal>

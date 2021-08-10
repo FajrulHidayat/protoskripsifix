@@ -3,6 +3,8 @@ import { Modal, Table, Input, Button, Space, Form } from "antd";
 import Highlighter from "react-highlight-words";
 import {
   SearchOutlined,
+  EditOutlined,
+  FilePdfOutlined,
   //  PlusOutlined
 } from "@ant-design/icons";
 import UbahDom from "../../utils/UbahDom";
@@ -165,12 +167,24 @@ class TabelJfu extends React.Component {
       key: "aksi",
       render: (text, record) => (
         <Button
+          style={{
+            backgroundColor: "#17A2B8",
+            color: "white",
+          }}
+          icon={<EditOutlined />}
           onClick={() =>
             UbahDom(`${this.state.route}/${record.nim}`, this.props.history)
           }
         >
           Edit
         </Button>
+        // <Button
+        //   onClick={() =>
+        //     UbahDom(`${this.state.route}/${record.nim}`, this.props.history)
+        //   }
+        // >
+        //   Edit
+        // </Button>
       ),
     },
   ];
@@ -517,7 +531,16 @@ class TabelJfu extends React.Component {
           dataIndex: "aksi",
           key: "aksi",
           render: (text, record) => (
-            <Button onClick={() => this.showModal(record)}>Edit</Button>
+            <Button
+              style={{
+                backgroundColor: "#17A2B8",
+                color: "white",
+              }}
+              icon={<EditOutlined />}
+              onClick={() => this.showModal(record)}
+            >
+              Edit
+            </Button>
           ),
         },
       ],
@@ -576,7 +599,15 @@ class TabelJfu extends React.Component {
                 // search:`?id=${record.id_surat}`
               }}
             >
-              Lihat
+              <Button
+                style={{
+                  backgroundColor: "#FF4D4F",
+                  color: "white",
+                }}
+                icon={<FilePdfOutlined />}
+              >
+                Lihat
+              </Button>
             </Link>
           ),
         },
