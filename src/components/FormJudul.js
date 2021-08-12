@@ -180,6 +180,13 @@ class FormJudul extends React.Component {
       "Nur Afif, S.T, M.T.",
       "Faisal, S.Kom., M.Kom.",
     ];
+    this.namaPengujiAgama = [
+      "Drs. H. Mahyuddin Latuconsina, S.H., M.A.",
+      "Dr. Shuhufi Abdullah, M.Ag",
+      "Dr. Sohra, M.Ag.",
+      "Dr. Abdullah, M.Ag.",
+      "Dr. Hamzah Hasan, M.H.I.",
+    ];
     this.onchange = this.onchange.bind(this);
   }
   async componentDidMount() {
@@ -316,14 +323,14 @@ class FormJudul extends React.Component {
         case "/admin/Formkompren":
           // console.log("switch3",this.props.match.path);
           await this.setState({ redirect: "/admin/kompren" });
-          await this.setState({ endPointFrom: "/master/proposal" });
+          await this.setState({ endPointFrom: "/master/judul" });
           await this.setState({ endPointTo: "/master/kompren" });
           this.tambahForm(2);
           this.getDataMahasiswa();
           break;
         case "/admin/Formkompren/:id":
           // console.log("switch3",this.props.match.path);
-          await this.setState({ redirect: "/admin/kompren" });
+          await this.setState({ redirect: "/admin/judul" });
           await this.setState({ endPointFrom: "/master/kompren" });
           await this.setState({
             endPointTo: "/master/kompren",
@@ -533,6 +540,7 @@ class FormJudul extends React.Component {
         if (data[i].name === tipe) {
           data[i].value = nim;
           change = true;
+          console.log(data[i]);
         }
       }
       if (!change) {
@@ -607,7 +615,7 @@ class FormJudul extends React.Component {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
-    let getData = (tiep, nim) => {
+    let getData = (tipe, nim) => {
       this.getDataForm(tipe, nim);
     };
     let setstate = (name, value) => {
@@ -820,7 +828,11 @@ class FormJudul extends React.Component {
             );
           } else if (
             form.name === "pembimbing1" ||
-            form.name === "pembimbing2"
+            form.name === "pembimbing2" ||
+            ((this.props.match.path === "/admin/Formkompren" ||
+              this.props.match.path === "/admin/Formkompren/:id") &&
+              form.name === "penguji1") ||
+            form.name === "penguji2"
           ) {
             // console.log(form.value);
             input = (
@@ -838,11 +850,11 @@ class FormJudul extends React.Component {
               />
             );
           } else if (
-            form.name === "penguji1" ||
-            ((this.props.match.path === "/admin/Formkompren" ||
-              this.props.match.path === "/admin/Formkompren/:id") &&
-              form.name === "penguji1") ||
-            form.name === "penguji2"
+            form.name === "penguji1"
+            //  ||
+            // ((this.props.match.path === "/admin/Formkompren" ||
+            //   this.props.match.path === "/admin/Formkompren/:id") &&
+            //   form.name === "penguji2")
           ) {
             // console.log(form.value);
             input = (
@@ -854,6 +866,27 @@ class FormJudul extends React.Component {
                   this.autocomplete(
                     document.getElementById(`${form.name}`),
                     this.namaPenguji,
+                    `${form.name}`
+                  )
+                }
+              />
+            );
+          } else if (
+            form.name === "penguji2" ||
+            ((this.props.match.path === "/admin/Formkompren" ||
+              this.props.match.path === "/admin/Formkompren/:id") &&
+              form.name === "penguji3")
+          ) {
+            // console.log(form.value);
+            input = (
+              <Input
+                name={form.name}
+                className="autocomplete"
+                id={form.name}
+                onChange={() =>
+                  this.autocomplete(
+                    document.getElementById(`${form.name}`),
+                    this.namaPengujiAgama,
                     `${form.name}`
                   )
                 }
